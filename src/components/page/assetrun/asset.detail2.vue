@@ -462,7 +462,7 @@ export default {
     getAssetInfo () {
       let params = {
         macAddress: this.id,
-        date: this.queryObj.date
+        date: moment(this.queryObj.date).format('YYYY-MM-DD')
       }
       api.dataForToday(params).then(rs => {
         this.assetinfo = Object.assign({}, this.assetinfo, rs.data)
