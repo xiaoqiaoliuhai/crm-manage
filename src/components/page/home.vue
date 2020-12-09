@@ -358,6 +358,11 @@ export default {
             type: 'shadow'
           }
         },
+        dataZoom: [{
+          type: 'inside'
+        }, {
+          type: 'slider'
+        }],
         grid: {
           left: '30',
           top: '15',
