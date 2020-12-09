@@ -161,31 +161,39 @@
                 <el-row>
                   <el-col :span="6" class="data-row">
                     <label>诊疗人数</label>
-                    <el-input :disabled="true">234</el-input>
+                    <el-input :disabled="true" v-model="assetinfo.treatCount"></el-input>
                   </el-col>
                   <el-col :span="6" class="data-row">
                     <label>工作时间</label>
-                    <el-input :disabled="true">234</el-input>
+                    <el-input :disabled="true" v-model="assetinfo.powerOnTime">
+                      <template slot="append">分钟</template>
+                    </el-input>
                   </el-col>
                   <el-col :span="6" class="data-row">
                     <label>故障时间</label>
-                    <el-input :disabled="true">234</el-input>
+                    <el-input :disabled="true" v-model="assetinfo.faultTime">
+                      <template slot="append">分钟</template>
+                    </el-input>
                   </el-col>
                   <el-col :span="6" class="data-row">
                     <label>待机时间</label>
-                    <el-input :disabled="true">234</el-input>
+                    <el-input :disabled="true" v-model="assetinfo.standbyTime">
+                      <template slot="append">分钟</template>
+                    </el-input>
                   </el-col>
                   <el-col :span="6" class="data-row">
                     <label>停机时间</label>
-                    <el-input :disabled="true">234</el-input>
+                    <el-input :disabled="true" v-model="assetinfo.powerOffTime">
+                      <template slot="append">分钟</template>
+                    </el-input>
                   </el-col>
                   <el-col :span="6" class="data-row">
                     <label>用电量</label>
-                    <el-input :disabled="true">234</el-input>
+                    <el-input :disabled="true" v-model="assetinfo.energy"></el-input>
                   </el-col>
                   <el-col :span="6" class="data-row">
                     <label>温度</label>
-                    <el-input :disabled="true">234</el-input>
+                    <el-input :disabled="true" v-model="assetinfo.temperature"></el-input>
                   </el-col>
                 </el-row>
             </div>
@@ -426,7 +434,16 @@ export default {
       dateValue: [],
       assetTimeChart: null,
       electricType: null,
-      isDanXiang: false
+      isDanXiang: false,
+      assetinfo: {
+        powerOnTime: 0,
+        standbyTime: 0,
+        powerOffTime: 0,
+        faultTime: 0,
+        energy: 0,
+        temperature: 0,
+        treatCount: 0
+      }
     }
   },
   methods: {
@@ -439,6 +456,16 @@ export default {
     query () {
       this.$nextTick(_ => {
         this.$refs.child1.query()
+        this.getAssetInfo()
+      })
+    },
+    getAssetInfo () {
+      let params = {
+        macAddress: this.id,
+        date: this.queryObj.date
+      }
+      api.dataForToday(params).then(rs => {
+        this.assetinfo = Object.assign({}, this.assetinfo, rs.data)
       })
     },
     getAssetTime (id) {
@@ -752,6 +779,9 @@ export default {
     & /deep/ .el-input {
       width: 160px;
       margin-left: 10px;
+    }
+    & /deep/ .el-input-group__append {
+      padding: 0 10px;
     }
     label {
       display: inline-block;

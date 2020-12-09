@@ -330,8 +330,12 @@ function todo (params) {
 function queryTreatCountAndAverageTime (params) {
   return axios.post('/manage/asset/queryTreatCountAndAverageTime', params)
 }
+function dataForToday (params) {
+  return axios.post('/manage/assetMetrics/dataForToday', params)
+}
 export default {
   todo,
+  dataForToday,
   queryTreatCountAndAverageTime,
   LearningCentercreate,
   LearningCenterdelete,
