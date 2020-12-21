@@ -1,7 +1,7 @@
 <template>
   <div class="layout_inner">
     <div class="main-head">
-      <ever-form2 :schema="querySchema" v-model="queryObj" @query="query" ref="form" class="package-sale" :info="true" label-position="right" :nosubmit="true" :inline="true">
+      <ever-form2 :schema="querySchema" v-model="queryObj" @query="query" ref="form" :info="true" label-position="right" :nosubmit="true" :inline="true">
         <template slot="area">
           <el-select v-model="queryObj.area" filterable placeholder="请选择" clearable @change="val => {areaChange(val)}">
             <el-option
@@ -134,7 +134,7 @@
             </div>
             <div v-else-if="item.id == 'floorNo'">
               <label>{{item.label}}</label>:
-              <span>{{Number(item.value) < 0 ?'B':''}}{{Math.abs(item.value) + " 层"}}</span>
+              <span>{{Number(item.value) < 0 ? 'B':''}}{{Math.abs(item.value) + " 层"}}</span>
             </div>
             <div v-else>
               <label>{{item.label}}</label>:

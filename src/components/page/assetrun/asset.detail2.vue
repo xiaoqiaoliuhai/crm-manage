@@ -487,7 +487,7 @@ export default {
     getData () {
       api.tempList({ macAddress: this.id }).then(rs => {
         this.info = rs.data[rs.data.length - 1]
-        this.isDanXiang = this.info.electricType === '1'
+        this.isDanXiang = this.info.electricType === 1
         this.assetId = this.info.assetId
         Object.assign(this.info, { deptName: this.info.deptName })
         if (!this.electricType) {

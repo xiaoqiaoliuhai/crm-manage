@@ -130,11 +130,11 @@ let schema = [
     props: {
       options: [
         {
-          id: '1',
+          id: 1,
           name: '单相单'
         },
         {
-          id: '2',
+          id: 2,
           name: '三相电'
         }
       ]
@@ -597,7 +597,6 @@ export default {
     this.getDeviceIdsOptions()
     if (this.$route.query.id) {
       this.detailId = this.$route.query.id
-      electric.props.disabled = true
       api.assetFindById({ id: this.detailId }).then(rs => {
         if (rs.code === 200) {
           this.emitInfo(rs.data)
