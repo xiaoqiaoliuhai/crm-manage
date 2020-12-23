@@ -131,7 +131,7 @@ let schema = [
       options: [
         {
           id: 1,
-          name: '单相单'
+          name: '单相电'
         },
         {
           id: 2,
@@ -403,7 +403,7 @@ export default {
       }
       let templateInfo = this.templateList.find(item => item.id === this.templateValue)
       for (let key in this.queryObj) {
-        let excludeKey = ['no', 'iotDeviceIds', 'sn', 'acceptStatus', 'setupEndAt', 'setupStartAt', 'setupStep', 'manualUrlList', 'receiptUrlList', 'contractUrlList']
+        let excludeKey = ['id', 'no', 'iotDeviceIds', 'sn', 'acceptStatus', 'setupEndAt', 'setupStartAt', 'setupStep', 'manualUrlList', 'receiptUrlList', 'contractUrlList']
         if (!excludeKey.includes(key)) {
           this.queryObj[key] = templateInfo[key]
         }

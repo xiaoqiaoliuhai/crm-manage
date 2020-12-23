@@ -389,7 +389,7 @@ export default {
   },
   filters: {
     electricType (val) {
-      return val === '2' ? '三相电' : val === '1' ? '单相电' : ''
+      return val === 2 ? '三相电' : val === 1 ? '单相电' : ''
     }
   },
   methods: {
