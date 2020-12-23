@@ -427,7 +427,12 @@ export default {
       } catch (err) {}
     },
     handleClose () {
-      this.$router.go(-1)
+      this.$router.push({
+        path: '/page/assetmanage',
+        query: {
+          offset: this.$route.query.offset
+        }
+      })
     },
     // 删除数组里面删除的图片地址
     handleManualRemove (file, fileList) {
@@ -521,7 +526,10 @@ export default {
             this.popShow = false
             if (rs.code === 200) {
               this.$messageTips(this, 'success', tips + '成功')
-              this.$router.go(-1)
+              this.$router.push({
+                path: '/page/assetmanage',
+                offset: this.$route.query.offset
+              })
             } else {
               this.$messageTips(this, 'error', tips + '失败')
             }

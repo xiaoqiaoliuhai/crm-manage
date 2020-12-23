@@ -82,7 +82,7 @@
       </el-table>
     </div>
     <div class="page-container">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="pageSizes" :page-size="20" :layout="layout" :total="totalCount">
+      <el-pagination v-if="pageShow" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="pageSizes" :page-size="20" :layout="layout" :total="totalCount">
       </el-pagination>
     </div>
     <div style="height: 10px;visibility: hidden;overflow: hidden;">
@@ -411,9 +411,7 @@ export default {
   },
   methods: {
     exportExcel () {
-      /* generate workbook object from table */
       var wb = XLSX.utils.table_to_book(document.querySelector('#excelTable'))
-      /* get binary string as output */
       var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
       try {
         FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '设备.xlsx')
@@ -430,7 +428,14 @@ export default {
       this.$router.push('/page/assetmanageadd')
     },
     emitInfo (row) {
-      this.$router.push('/page/assetmanageadd?id=' + row.id)
+      // this.$router.push('/page/assetmanageadd?id=' + row.id)
+      this.$router.push({
+        path: '/page/assetmanageadd',
+        query: {
+          id: row.id,
+          offset: this.offset
+        }
+      })
     },
     async delInfo (row) {
       this.$confirm('确定要删除该设备信息?', '提示', {

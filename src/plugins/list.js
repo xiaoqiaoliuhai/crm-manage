@@ -1,7 +1,14 @@
 // import api from '@/api/api'
 var component = {
   mounted () {
-    this.query()
+    if (this.$route.query.offset) {
+      this.pageShow = false
+      this.currentPage = this.offset = Number(this.$route.query.offset)
+      this.$nextTick(() => {
+        this.pageShow = true
+      })
+    }
+    this.list()
   },
   data () {
     return {
@@ -13,14 +20,15 @@ var component = {
       loading: false,
       layout: 'total, sizes, prev, pager, next, jumper',
       pageSizes: [10, 20, 30, 50, 100],
-      current: Number(this.$route.query.page) || 1
+      current: Number(this.$route.query.page) || 1,
+      pageShow: true
     }
   },
   methods: {
     // 延迟400毫秒查询
     query () {
       setTimeout(queryObject => {
-        this.handleCurrentChange(1)
+        this.handleCurrentChange()
       }, 400)
     },
     list: function (refresh) {
@@ -58,8 +66,10 @@ var component = {
       this.list()
     },
     handleCurrentChange (val) {
-      this.current = val
-      this.offset = val || 0
+      if (val) {
+        this.current = val
+        this.offset = val
+      }
       this.list()
       return this.pageAfter && this.pageAfter(this.pagesize)
     }
