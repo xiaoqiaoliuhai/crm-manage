@@ -262,6 +262,9 @@ export default {
             this.chart = echarts.init(this.$refs.historyEc)
             this.queryObj.type = this.obj.type
             this.getData()
+            this.chart.on('click', function (param) {
+              console.log(param, '1111111');//这里根据param填写你的跳转逻辑
+            })
           }, 300)
         } else {
           this.clearInfo()

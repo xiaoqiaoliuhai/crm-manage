@@ -134,10 +134,36 @@
                     </div>
                   </template>
                   <template slot="btn">
-                    <el-button @click="query">查看</el-button>
+                    <el-button type="primary" @click="query">查看</el-button>
+                    <el-button type="primary" :disabled="queryObj.dataType===1" @click="inputInfo">人工录入</el-button>
                   </template>
                 </ever-form2>
               </div>
+              <fieldset>
+                <legend>录入数据</legend>
+                <div v-for="(item, index) in inputData" :key="index" class="aaaa" :class="{curStyle: clickLen === index}" @click="inputClick(index)">
+                  <div class="bbb">开始时间</div>
+                  <div>
+                    <el-date-picker
+                      v-model="item.start"
+                      type="datetime"
+                      placeholder="">
+                    </el-date-picker>
+                  </div>
+                  <div class="bbb">结束时间</div>
+                  <div>
+                    <el-date-picker
+                      v-model="item.end"
+                      type="datetime"
+                      placeholder="">
+                    </el-date-picker>
+                  </div>
+                  <div class="btn" @click="del(index)">
+                    <i class="el-icon-close"></i>
+                  </div>
+                </div>
+                <el-button type="primary" @click="add">添加</el-button>
+              </fieldset>
             </el-col>
           </el-row>
           <div>
@@ -382,7 +408,7 @@ export default {
       id: this.$route.query.id,
       loading: false,
       activeName: 1,
-      value4: [],
+      noSearch: true,
       options: [
         { id: 1, name: '输入电流', unit: 'A', objVal: 'inputIObj' },
         { id: 2, name: '输入电压', unit: 'V', objVal: 'inputVObj' },
@@ -431,7 +457,10 @@ export default {
         dayTime: 0,
         todayBoots: 0
       },
-      dateValue: [],
+      dateValue: [
+        moment(new Date().getTime() - 86400000).format('YYYY-MM-DD HH:mm:ss'),
+        moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss')
+      ],
       assetTimeChart: null,
       electricType: null,
       isDanXiang: false,
@@ -443,10 +472,28 @@ export default {
         energy: 0,
         temperature: 0,
         treatCount: 0
-      }
+      },
+      inputData: [
+        {start: '', end: ''},
+        {start: '', end: ''},
+        {start: '', end: ''}
+      ],
+      clickLen: 0
     }
   },
   methods: {
+    inputInfo () { 
+    },
+    add () {
+      this.inputData.push({start: '', end: ''})
+    },
+    del (index) {
+      if (this.inputData.length === 1) return
+      this.inputData.splice(index, 1)
+    },
+    inputClick (index) {
+      this.clickLen = index
+    },
     getAverageTime (val) {
       this.timeInfo.averageTime = val
     },
@@ -573,8 +620,8 @@ export default {
         macAddr: this.$route.query.id,
         pageNum: 1,
         pageSize: 100,
-        endDate: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
-        beginDate: '2019-01-01 00:00:00'
+        endDate: moment(this.dateValue[1]).format('YYYY-MM-DD') + ' 23:59:59',
+        beginDate: moment(this.dateValue[0]).format('YYYY-MM-DD') + ' 00:00:00'
       }
       api.findAnomalous(params).then(rs => {
         this.tableData = rs.data.list
@@ -786,6 +833,48 @@ export default {
     label {
       display: inline-block;
       width: 65px;
+    }
+  }
+  .aaaa {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    width: 210px;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin: 5px;
+    position: relative;
+    /deep/ input {
+      height: 28px !important;
+      line-height: 28px;
+    }
+  }
+  .bbb {
+    margin: 5px 0;
+  }
+  .aaaa .btn{
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-bottom: 1px solid #eee;
+    border-left: 1px solid #eee;
+    border-bottom-left-radius: 5px;
+    text-align: center;
+    line-height: 15px;
+    cursor: pointer;
+  }
+  .aaaa .btn:hover{
+    background-color:#fbc4c4;
+    color: #eee;
+  }
+  .curStyle {
+    border: 1px solid #409EFF;
+    color: #409EFF;
+    .btn {
+      border-bottom: 1px solid #409EFF;
+      border-left: 1px solid #409EFF;
     }
   }
 </style>

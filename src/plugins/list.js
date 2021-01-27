@@ -8,7 +8,9 @@ var component = {
         this.pageShow = true
       })
     }
-    this.list()
+    if (!this.noSearch) {
+      this.list()
+    } 
   },
   data () {
     return {
