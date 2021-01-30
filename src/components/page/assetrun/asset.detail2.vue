@@ -86,7 +86,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row v-if="!['44', '0'].includes(orgId)">
       <el-col :span="24">
         <div class="demo-css">
           <treatment-info></treatment-info>
@@ -265,7 +265,7 @@
                 </el-date-picker>
               </div>
               <div style="display:inline-block;" class="btn-style">
-                <el-button icon="el-icon-search" @click="getAnomalous"></el-button>
+                <el-button icon="el-icon-search" @click="list"></el-button>
               </div>
             </el-col>
           </el-row>
@@ -403,7 +403,6 @@ export default {
       temperatureObj: { x: '00:00:00', y: '0' }, // 温度
       powerHzObj: { x: '00:00:00', y: '0' }, // 电源频率
       energyObj: { x: '00:00:00', y: '0' }, // 电能计量
-
       intervalTime: null,
       info: {},
       echartsInfo: {
@@ -443,7 +442,9 @@ export default {
         energy: 0,
         temperature: 0,
         treatCount: 0
-      }
+      },
+      listApiName: 'getAnomalous',
+      orgId: ''
     }
   },
   methods: {
@@ -568,7 +569,7 @@ export default {
       this.infoQueryObj.assetType = data.assetStatus
       this.infoQueryObj.networkStatus = data.networkStatus
     },
-    getAnomalous () {
+    list () {
       let params = {
         macAddr: this.$route.query.id,
         pageNum: 1,
@@ -594,10 +595,11 @@ export default {
     this.clear()
   },
   created () {
+    this.orgId = JSON.parse(localStorage.getItem('currentUser')).orgId
     this.queryObj.type = 1
     this.echartsInfo.data = this.inputIObj
     this.getData()
-    this.getAnomalous()
+    // this.getAnomalous()
     this.getRange()
     this.intervalTime = setInterval(_ => {
       this.getData()

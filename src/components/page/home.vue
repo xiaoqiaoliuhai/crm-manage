@@ -439,14 +439,15 @@ export default {
     failureInitData (data) {
       let assetfailureInfo = {
         text: '设备状态',
-        titleData: ['开机', '待机', '关机', '故障', '离线'],
+        titleData: ['开机', '待机', '关机', '故障', '离线', '超限'],
         name: '设备状态',
         data: [
           { value: 0, name: '开机', label: '4020' },
           { value: 0, name: '待机', label: '30' },
           { value: 0, name: '关机', label: '10' },
           { value: 0, name: '故障', label: '50' },
-          { value: 0, name: '离线', label: 'else' }
+          { value: 0, name: '离线', label: '60' },
+          { value: 0, name: '超限', label: '70' }
         ]
       }
       data.forEach(item => {
@@ -458,6 +459,8 @@ export default {
           assetfailureInfo.data[2]['value'] += 1
         } else if (item.assetStatus === 50) {
           assetfailureInfo.data[3]['value'] += 1
+        } else if (item.assetStatus === 70) {
+          assetfailureInfo.data[5]['value'] += 1
         } else {
           assetfailureInfo.data[4]['value'] += 1
         }

@@ -601,8 +601,15 @@ export default {
     }
   },
   created () {
+    let orgId = JSON.parse(localStorage.getItem('currentUser')).orgId
     let electric = this.querySchema.find(item => {return item.name === 'electricType'})
     this.getDeviceIdsOptions()
+    if (['44', '0'].includes(orgId)) {
+      electric.props.options = [
+        { id: 1, name: '单相电' }
+      ]
+      this.queryObj.electricType = 1
+    }
     if (this.$route.query.id) {
       this.detailId = this.$route.query.id
       api.assetFindById({ id: this.detailId }).then(rs => {

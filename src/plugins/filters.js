@@ -1,8 +1,8 @@
 /*
  * @Author: renpengfei
  * @Date: 2019-03-25 14:56:51
- * @Last Modified by: renpengfei
- * @Last Modified time: 2020-05-25 15:56:11
+ * @Last Modified by: qiaodengtao
+ * @Last Modified time: 2021-01-30 11:45:45
  */
 /**
  * 设备装机状态
@@ -131,6 +131,8 @@ export const filterAssetStatus = assetStatus => {
       return '运行'
     case '50' :
       return '故障'
+    case '70' :
+      return '超限'
     default:
       return '未知'
   }
