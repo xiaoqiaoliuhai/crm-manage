@@ -133,7 +133,9 @@ function createEle (obj, item, createElement, form) {
             } else {
               val = Number(val)
             }
-          } catch (e) {}
+          } catch (e) {
+            // empty
+          }
         }
         setProp(obj, name, val)
         // input 只有在用户有输入时候触发，这点与 change 事件不同
@@ -143,7 +145,7 @@ function createEle (obj, item, createElement, form) {
             .query()
         }
       },
-      'focus': (e) => {
+      'focus': () => {
         form.$emit('focus', name, obj)
       }
     },
@@ -395,7 +397,7 @@ export default Vue.component('everForm2', {
               .then(result => {
                 this.disabled = false
                 this.$emit('objsaved', result)
-              }, _ => {
+              }, () => {
                 this.disabled = false
               })
           } else {

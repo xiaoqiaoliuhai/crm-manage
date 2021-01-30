@@ -232,7 +232,7 @@ export default {
   },
   watch: {
     'popShow': {
-      handler: function (val, oldval) {
+      handler: function (val) {
         if (!val) {
           this.arr.forEach(item => {
             item.value = ''
@@ -251,7 +251,9 @@ export default {
       var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
       try {
         FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '不良事件/投诉.xlsx')
-      } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+      } catch (e) {
+        // empty
+      }
       return wbout
     },
     seeDetail (row) {
@@ -282,10 +284,9 @@ export default {
             this.query()
           }
         } catch (err) {
-          console.log(err)
+          // empty
         }
       })
-        .then(() => {})
     }
   },
   filters: {

@@ -86,7 +86,7 @@ export default {
         return
       }
       let params = {
-        macAddress: this.$route.query.id,
+        assetId: this.$route.query.assetId,
         beginDate: moment(this.queryObj.date.beginDate).format('YYYY-MM-DD') + ' 00:00:00',
         endDate: moment(this.queryObj.date.endDate).format('YYYY-MM-DD') + ' 23:59:59'
       }
@@ -145,7 +145,7 @@ export default {
     }
   },
   created () {
-    this.$nextTick(_ => {
+    this.$nextTick(() => {
       this.chart = echarts.init(this.$refs.historyEc)
       this.query()
     })

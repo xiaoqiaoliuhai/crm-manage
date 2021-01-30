@@ -56,7 +56,7 @@ var component = {
           this.emptyData = true
           this.totalCount = 0
         }
-      }).catch(rj => {
+      }).catch(() => {
         this.loading = false
       })
     },

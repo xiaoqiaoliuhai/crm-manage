@@ -400,13 +400,13 @@ export default {
   methods: {
     showInput () {
       this.inputVisible = true
-      this.$nextTick(_ => {
+      this.$nextTick(() => {
         this.$refs.saveTagInput.$refs.input.focus()
       })
     },
     showPayInput () {
       this.inputPayVisible = true
-      this.$nextTick(_ => {
+      this.$nextTick(() => {
         this.$refs.saveTagPayInput.$refs.input.focus()
       })
     },
@@ -448,7 +448,7 @@ export default {
       })
       this.costSummary[this.costSummary.length - 1]['value'] = price
     },
-    costInputChange (key, value) {
+    costInputChange (key) {
       let price = 0
       let allPrice = 0
       this.assetArr.forEach(item => {
@@ -471,7 +471,7 @@ export default {
       })
       this.incomeSummary[this.incomeSummary.length - 1]['value'] = price
     },
-    assetInputChange (key, value) {
+    assetInputChange (key) {
       let price = 0
       let allPrice = 0
       this.assetArr.forEach(item => {
@@ -583,7 +583,7 @@ export default {
       })
     },
     async getAssetFeeInfo () {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         let data = []
         this.assetArr.forEach(item => {
           let info = {
@@ -743,12 +743,14 @@ export default {
         tableData.push(asset)
       })
       this.tableData = tableData
-      this.$nextTick(_ => {
+      this.$nextTick(() => {
         var wb = XLSX.utils.table_to_book(document.querySelector('#excelTable'))
         var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
         try {
           FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '效益分析.xlsx')
-        } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+        } catch (e) {
+          // empty
+        }
         return wbout
       })
     },

@@ -120,22 +120,20 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      })
-        .then(async () => {
-          try {
-            let data = await api.delBuilding({ id: row.id })
-            if (data && data.code === 200) {
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              })
-              this.query()
-            }
-          } catch (err) {
-            console.log(err)
+      }).then(async () => {
+        try {
+          let data = await api.delBuilding({ id: row.id })
+          if (data && data.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.query()
           }
-        })
-        .then(() => {})
+        } catch (err) {
+          // empty
+        }
+      })
     }
   },
   watch: {}

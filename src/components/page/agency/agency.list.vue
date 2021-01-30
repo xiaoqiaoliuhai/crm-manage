@@ -115,10 +115,9 @@ export default {
             this.query()
           }
         } catch (err) {
-          console.log(err)
+          // empty
         }
       })
-        .then(() => {})
     }
   },
   watch: {

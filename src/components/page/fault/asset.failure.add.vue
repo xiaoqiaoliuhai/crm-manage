@@ -473,7 +473,7 @@ export default {
       })
     },
     // 删除数组里面删除的图片地址
-    handleReceiptRemove (file, fileList) {
+    handleReceiptRemove (file) {
       this.imgObj.receiptImg = this.sliceArr(
         this.imgObj.receiptImg,
         file,
@@ -726,7 +726,7 @@ export default {
   },
   watch: {
     'infoQueryObj2.assetId': {
-      handler: function (val, oldval) {
+      handler: function (val) {
         if (val) {
           this.getContractInfo(val)
         }

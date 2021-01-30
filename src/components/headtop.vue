@@ -106,7 +106,7 @@ export default {
   },
   watch: {
     currentUser: {
-      handler: function (val, oldval) {
+      handler: function (val) {
         if (val.menuArr.length > 0) {
           this.restaurants = this.loadAll()
         }

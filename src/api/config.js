@@ -1,8 +1,8 @@
 /*
  * @Author: renpengfei
  * @Date: 2019-03-16 18:31:01
- * @Last Modified by: renpengfei
- * @Last Modified time: 2019-09-04 18:03:56
+ * @Last Modified by: qiaodengtao
+ * @Last Modified time: 2021-01-30 14:23:50
  */
 import axios from 'axios'
 import router from '../router'
@@ -55,7 +55,6 @@ service
     },
     // Do something with response error
     error => {
-      console.log(error)
       Notification.error('网络请求失败，请稍后再试')
       if (error.response) {
         switch (error.response.status) {

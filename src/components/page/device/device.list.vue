@@ -282,7 +282,7 @@ export default {
   },
   watch: {
     'popShow': {
-      handler: function (val, oldval) {
+      handler: function (val) {
         if (!val) {
           this.arr.forEach(item => {
             item.value = ''
@@ -301,7 +301,9 @@ export default {
       var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
       try {
         FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '物联设备管理.xlsx')
-      } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+      } catch (e) {
+        // empty
+      }
       return wbout
     },
     seeDetail (row) {
@@ -332,22 +334,20 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      })
-        .then(async () => {
-          try {
-            let data = await api.deleteIotDevice({ id: row.id })
-            if (data && data.code === 200) {
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              })
-              this.query()
-            }
-          } catch (err) {
-            console.log(err)
+      }).then(async () => {
+        try {
+          let data = await api.deleteIotDevice({ id: row.id })
+          if (data && data.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.query()
           }
-        })
-        .then(() => {})
+        } catch (err) {
+          // empty
+        }
+      })
     }
   }
 }

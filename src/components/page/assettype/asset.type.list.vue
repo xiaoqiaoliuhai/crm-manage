@@ -241,9 +241,9 @@ export default {
             this.query()
           }
         } catch (err) {
-          console.log(err)
+          // empty
         }
-      }).then(() => {})
+      })
     },
     init () {
       if (Number(this.currentUser.orgId) === 0) {
@@ -261,7 +261,7 @@ export default {
   },
   watch: {
     'logInfo.visibile': {
-      handler: function (val, oldval) {
+      handler: function (val) {
         if (!val) {
           this.infoQueryObj.mainType = ''
           this.infoQueryObj.firstType = ''

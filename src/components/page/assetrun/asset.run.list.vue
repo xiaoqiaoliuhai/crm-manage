@@ -398,7 +398,9 @@ export default {
       var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
       try {
         FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '设备监测.xlsx')
-      } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+      } catch (e) {
+        // empty
+      }
       return wbout
     },
     onChange () {
@@ -407,21 +409,27 @@ export default {
     query () {
       this.banAutomatic = false
       this.list()
-      this.queryTime = window.setTimeout(_ => {
+      this.queryTime = window.setTimeout(() => {
         this.banAutomatic = true
         window.clearTimeout(this.queryTime)
         this.queryTime = null
       }, 60000)
     },
     automaticQuery () {
-      this.automaticTime = window.setInterval(_ => {
+      this.automaticTime = window.setInterval(() => {
         if (this.banAutomatic) {
           this.list()
         }
       }, 60000)
     },
     seeDetails (row) {
-      this.$router.push('/page/assetdetail2?id=' + row.macAddr)
+      this.$router.push({
+        path: 'assetdetail2',
+        query: {
+          macAddr: row.macAddr,
+          assetId: row.assetId
+        }
+      })
     },
     seeEcharts () {
       this.$router.push('/page/home')
@@ -456,7 +464,7 @@ export default {
     }
   },
   created () {
-    this.$nextTick(_ => {
+    this.$nextTick(() => {
       let height = document.documentElement.clientHeight
       document.querySelector('.table-contant').style.height = height - 220 + 'px'
     })

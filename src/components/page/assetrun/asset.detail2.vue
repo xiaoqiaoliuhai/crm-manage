@@ -379,7 +379,8 @@ export default {
       api,
       querySchema: schema,
       queryObj: obj,
-      id: this.$route.query.id,
+      id: this.$route.query.macAddr,
+      assetId: this.$route.query.assetId,
       loading: false,
       activeName: 1,
       value4: [],
@@ -422,7 +423,6 @@ export default {
         networkStatus: '在线',
         assetType: 1 // 1激活 2关机 3待机 4报警 5故障
       },
-      assetId: null,
       timeInfo: {
         yearTime: 0,
         totalTime: 0,
@@ -455,23 +455,23 @@ export default {
       this.$router.go(-1)
     },
     query () {
-      this.$nextTick(_ => {
+      this.$nextTick(() => {
         this.$refs.child1.query()
         this.getAssetInfo()
       })
     },
     getAssetInfo () {
       let params = {
-        macAddress: this.id,
+        assetId: this.assetId,
         date: moment(this.queryObj.date).format('YYYY-MM-DD')
       }
       api.dataForToday(params).then(rs => {
         this.assetinfo = Object.assign({}, this.assetinfo, rs.data)
       })
     },
-    getAssetTime (id) {
+    getAssetTime () {
       let params = {
-        assetId: id
+        assetId: this.assetId
       }
       api.findAssetBootTime(params).then(rs => {
         if (rs.code === 200) {
@@ -486,10 +486,9 @@ export default {
       this.echartsInfo.data = this[lab.objVal]
     },
     getData () {
-      api.tempList({ macAddress: this.id }).then(rs => {
+      api.tempList({ assetId: this.assetId }).then(rs => {
         this.info = rs.data[rs.data.length - 1]
         this.isDanXiang = this.info.electricType === 1
-        this.assetId = this.info.assetId
         Object.assign(this.info, { deptName: this.info.deptName })
         if (!this.electricType) {
           this.electricType = this.info.electricType
@@ -556,8 +555,8 @@ export default {
         }
       })
     },
-    getContractInfo (assetId) {
-      api.findByAssetContract({ assetId: assetId, pageNum: 1, pageSize: 20 }).then(rs => {
+    getContractInfo () {
+      api.findByAssetContract({ assetId: this.assetId, pageNum: 1, pageSize: 20 }).then(rs => {
         if (rs.data && rs.data.length > 0) {
           this.infoQueryObj.guaranteeType = '1'
         } else {
@@ -571,7 +570,7 @@ export default {
     },
     list () {
       let params = {
-        macAddr: this.$route.query.id,
+        assetId: this.assetId,
         pageNum: 1,
         pageSize: 100,
         endDate: moment(new Date().getTime()).format('YYYY-MM-DD HH:mm:ss'),
@@ -599,32 +598,25 @@ export default {
     this.queryObj.type = 1
     this.echartsInfo.data = this.inputIObj
     this.getData()
+    this.getAssetTime()
+    this.getContractInfo()
     // this.getAnomalous()
     this.getRange()
-    this.intervalTime = setInterval(_ => {
+    this.intervalTime = setInterval(() => {
       this.getData()
     }, 5000)
   },
   watch: {
     'queryObj.dataType': {
-      handler: function (val, oldval) {
+      handler: function (val) {
         if (val === 1) {
           this.getData()
-          this.intervalTime = setInterval(_ => {
+          this.intervalTime = setInterval(() => {
             this.getData()
           }, 5000)
           this.typeChange(this.queryObj.type)
         } else {
           this.clear()
-        }
-      },
-      deep: true
-    },
-    'assetId': {
-      handler: function (val, oldval) {
-        if (val) {
-          this.getAssetTime(val)
-          this.getContractInfo(val)
         }
       },
       deep: true

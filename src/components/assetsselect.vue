@@ -37,7 +37,9 @@ export default {
           item.assetInfo = `${item.name}（${item.model || '-'} ${item.sn || '-'} ${item.vender || '-'} ${item.ctime.split(' ')[0] || '-'} ）`
         })
         this.options = data.data.list
-      } catch (err) {}
+      } catch (err) {
+        // empty
+      }
     }
   },
   computed: {
