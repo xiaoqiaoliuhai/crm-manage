@@ -549,8 +549,8 @@ export default {
     getRange () {
       api.findByMacAddr({ macAddr: this.$route.query.id }).then(rs => {
         if (rs.code === 200) {
-          this.ranage.V.max = rs.data.dianYaShang
-          this.ranage.V.min = rs.data.dianYaXia
+          this.ranage.V.max = rs.data.dianYaXia
+          this.ranage.V.min = rs.data.dianYaShang
           this.info.deptName = rs.data.deptName
         }
       })
