@@ -122,16 +122,21 @@
         align="center"
         width="250">
         <template slot-scope="scope">
-          <el-button
+          <!-- <el-button
             type="text"
             icon="el-icon-search"
             @click="seeDetail(scope.row)"
-          >详情</el-button>
+          >详情</el-button> -->
           <el-button
             type="text"
             icon="el-icon-edit"
             @click="emitInfo(scope.row)"
           >编辑</el-button>
+          <el-button
+            type="text"
+            icon="el-icon-edit"
+            @click="print(scope.row)"
+          >打印</el-button>
           <el-button
             type="text"
             class="delete-btn-color"
@@ -505,6 +510,15 @@ export default {
     },
     emitInfo (row) {
       this.$router.push('/page/assetfailuradd?id=' + row.id)
+    },
+    print (row) {
+      this.$router.push({
+        path: '/page/assetfailurprint',
+        query: {
+          id: row.id,
+          assetId: row.assetId
+        }
+      })
     },
     delInfo (row) {
       this.$confirm('确定要删除该设备故障记录?', '提示', {

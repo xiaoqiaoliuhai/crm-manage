@@ -16,6 +16,7 @@ const assetManageAdd = r => require.ensure([], () => r(require('@/components/pag
 
 const assetFailure = r => require.ensure([], () => r(require('@/components/page/fault/asset.failure.list.vue')), 'assetFailure')
 const assetFailurAdd = r => require.ensure([], () => r(require('@/components/page/fault/asset.failure.add.vue')), 'assetFailureadd')
+const assetFailurPrint = r => require.ensure([], () => r(require('@/components/page/fault/asset.failure.print.vue')), 'assetFailureprint')
 const maintenanceQa = r => require.ensure([], () => r(require('@/components/page/maintain/maintenanceqa.vue')), 'maintenanceqa')
 const maintenanceQaAdd = r => require.ensure([], () => r(require('@/components/page/maintain/maintenanceqaadd.vue')), 'maintenanceqaadd')
 const maintenanceMain = r => require.ensure([], () => r(require('@/components/page/maintain/maintenancemain.vue')), 'maintenancemain')
@@ -129,6 +130,13 @@ const routerarr = [
       {
         path: 'assetfailuradd',
         component: assetFailurAdd,
+        meta: {
+          name: '设备维修'
+        }
+      },
+      {
+        path: 'assetfailurprint',
+        component: assetFailurPrint,
         meta: {
           name: '设备维修'
         }

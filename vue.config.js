@@ -11,9 +11,11 @@ module.exports = {
     //     }
     //   }
     // }
-    proxy: 'http://smart-hcp.com'
+    proxy: 'http://47.115.23.96'
     //proxy: 'http://fhhy-jn-0001.51vip.biz:25874'
-
+    // 账号:superservice
+    // 密码:cuta083001#
+    // IP：47.115.23.96
   },
   runtimeCompiler: true
 }
