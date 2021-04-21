@@ -19,7 +19,7 @@
         <tr class="border-bot">
           <td colspan="2">设备名称: {{info.assetName}}</td>
           <td colspan="2">修复日期: 
-            <div v-if="!info.repairTime" class="date-container">
+            <div class="date-container">
               <span>{{info.repairTime | formatTime(0)}}</span>年
               <span>{{info.repairTime | formatTime(1)}}</span>月
               <span>{{info.repairTime | formatTime(2)}}</span>日
@@ -171,6 +171,7 @@
       </table>
     </div>
     <div class="button-container">
+      <el-button @click="goPrev">返回</el-button>
       <el-button type="primary" @click="print">打印</el-button>
     </div>
   </div>
@@ -202,6 +203,9 @@ export default {
     },
     print() {
       window.print()
+    },
+    goPrev() {
+      this.$router.go(-1)
     }
   },
   filters: {
@@ -256,10 +260,10 @@ table tr td {
   padding-right: 10px;
   text-align: left;
   padding: 0 5px;
-  height: 40px;
+  height: 38px;
 }
 .only-tr {
-  height: 100px;
+  height: 80px;
 }
 .only-tr td {
   position: relative;

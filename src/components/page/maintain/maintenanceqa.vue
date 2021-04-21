@@ -26,13 +26,13 @@
       </el-table-column>
       <el-table-column prop="assetName" label="设备名称" fixed>
       </el-table-column>
-      <el-table-column prop="actionUserId" label="实际质控人">
+      <el-table-column prop="actionUserId" label="实际质控人" width="120">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="areaName" label="院区" width="110">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="orgName" label="医院名称" width="110">
       </el-table-column>
-      <el-table-column prop="sn" label="SN序列号">
+      <el-table-column prop="sn" label="SN序列号" width="150">
       </el-table-column>
       <el-table-column prop="no" label="设备编号">
       </el-table-column>
@@ -54,6 +54,10 @@
           {{scope.row.extra | formatToFinacial}}
         </template>
       </el-table-column>
+      <el-table-column show-overflow-tooltip prop="testContent" label="质控内容" width="180">
+      </el-table-column>
+      <el-table-column show-overflow-tooltip prop="tesResults" label="质控结果" width="180">
+      </el-table-column>
       <el-table-column prop="reportUrlList" label="质控报告" width="150">
         <template slot-scope="scope">
           <fileshow :type="'img'" :tailor="true" :isNoShowBtn="true" :fileurlList="scope.row.reportUrlList"></fileshow>
@@ -72,47 +76,35 @@
       </el-pagination>
     </div>
     <div style="height: 50px;visibility: hidden;overflow: hidden;">
-      <el-table id="excelTable" :data="tableData" style="width: 100%">
-        <el-table-column type="index" width="50" label="序号">
-        </el-table-column>
-        <el-table-column prop="assetName" label="设备名称">
-        </el-table-column>
-        <el-table-column prop="actionUserId" label="实际质控人">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="areaName" label="院区" width="110">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="orgName" label="医院名称" width="110">
-        </el-table-column>
-        <el-table-column prop="sn" label="SN序列号">
-        </el-table-column>
-        <el-table-column prop="no" label="设备编号">
-        </el-table-column>
-        <el-table-column prop="vender" label="生产厂家">
-        </el-table-column>
-        <el-table-column prop="contact" label="联系方式">
-        </el-table-column>
-        <el-table-column prop="vender" label="服务提供方" width="150">
-        </el-table-column>
-        <el-table-column prop="actionDate" label="质控实际发生时间" width="200">
-        </el-table-column>
-        <el-table-column prop="ctime" label="创建时间" width="180">
-        </el-table-column>
-        <el-table-column prop="mtime" label="更新时间" width="180">
-        </el-table-column>
-        <el-table-column prop="planDate" label="质控计划时间" width="180">
-        </el-table-column>
-        <el-table-column prop="reportUrlList" label="质控报告" width="150">
-          <template slot-scope="scope">
-            <fileshow :type="'img'" :tailor="true" :isNoShowBtn="true" :fileurlList="scope.row.reportUrlList"></fileshow>
-          </template>
-        </el-table-column>
-        <el-table-column prop="extra" label="其他扩展信息" width="150">
-        </el-table-column>
-        <el-table-column prop="orgName" label="机构" width="180">
-        </el-table-column>
-        <el-table-column prop="userId" label="创建者ID" width="180">
-        </el-table-column>
-      </el-table>
+      <table id="excelTable">
+        <tr>
+          <td :colspan="10">西南医科大型附属中医医院质量控制检测记录表</td>
+        </tr>
+        <tr>
+          <td>序号</td>
+          <td>设备名称</td>
+          <td>资产编码</td>
+          <td>使用部门</td>
+          <td>规格型号</td>
+          <td>出厂编码</td>
+          <td>检测内容</td>
+          <td>检测结论</td>
+          <td>检测时间</td>
+          <td>检测人</td>
+        </tr>
+        <tr v-for="(item ,index) in tableData" :key="index">
+          <td>{{index+1}}</td>
+          <td>{{item.assetName}}</td>
+          <td>{{item.no}}</td>
+          <td>{{item.deptName}}</td>
+          <td>{{item.spec}}</td>
+          <td>{{item.sn}}</td>
+          <td>{{item.testContent}}</td>
+          <td>{{item.tesResults}}</td>
+          <td>{{item.actionDate}}</td>
+          <td>{{item.actionUserId}}</td>
+        </tr>
+      </table>
     </div>
     <el-dialog :title="'质控详情'" v-if="popShow" :visible.sync="popShow" class="ui_dialog_02 detail-log carditem" width="80%" :append-to-body="true">
       <div>
@@ -175,6 +167,11 @@ let arr = [
     value: ''
   },
   {
+    id: 'deptName',
+    label: '科室',
+    value: ''
+  },
+  {
     id: 'actionUserId',
     label: '实际质控人',
     value: ''
@@ -210,13 +207,23 @@ let arr = [
     value: ''
   },
   {
-    id: 'extra',
-    label: '其他扩展信息',
+    id: 'testContent',
+    label: '质控内容',
+    value: ''
+  },
+  {
+    id: 'tesResults',
+    label: '质控结果',
     value: ''
   },
   {
     id: 'reportUrlList',
     label: '质控报告',
+    value: ''
+  },
+  {
+    id: 'extra',
+    label: '其他扩展信息',
     value: ''
   }
 ]
@@ -256,7 +263,7 @@ export default {
       /* get binary string as output */
       var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
       try {
-        FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '设备质控.xlsx')
+        FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '西南医科大型附属中医医院质量控制检测记录表.xlsx')
       } catch (e) {
         // empty
       }

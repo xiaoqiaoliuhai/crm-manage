@@ -53,6 +53,15 @@ let infoSchema = [
     comp: 'assets-select'
   },
   {
+    name: 'planDate',
+    label: '质控计划时间',
+    comp: 'el-date-picker',
+    props: {
+      type: 'datetime',
+      valueFormat: 'yyyy-MM-dd HH:mm:ss'
+    }
+  },
+  {
     name: 'actionUserId',
     label: '实际质控人'
   },
@@ -70,15 +79,6 @@ let infoSchema = [
     label: '联系方式'
   },
   {
-    name: 'planDate',
-    label: '质控计划时间',
-    comp: 'el-date-picker',
-    props: {
-      type: 'datetime',
-      valueFormat: 'yyyy-MM-dd HH:mm:ss'
-    }
-  },
-  {
     name: 'reportUrlList',
     label: '质控报告',
     comp: 'custom'
@@ -90,6 +90,14 @@ let infoSchema = [
     props: {
       options: SelectOptions
     }
+  },
+  {
+    name: 'testContent',
+    label: '质控内容'
+  },
+  {
+    name: 'tesResults',
+    label: '质控结果'
   },
   {
     name: 'vender',

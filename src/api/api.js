@@ -333,9 +333,14 @@ function queryTreatCountAndAverageTime (params) {
 function dataForToday (params) {
   return axios.post('/manage/assetMetrics/dataForToday', params)
 }
+// 导出设备检修报告pdf
+function downloadMaintenanceReport (params) {
+  return axios.post('/fault/downloadMaintenanceReport', params)
+}
 export default {
   todo,
   dataForToday,
+  downloadMaintenanceReport,
   queryTreatCountAndAverageTime,
   LearningCentercreate,
   LearningCenterdelete,
