@@ -69,7 +69,7 @@ export default {
       let params = {
         endDate: moment(end).format('YYYY-MM-DD HH:mm:ss'),
         beginDate: moment(start).format('YYYY-MM-DD HH:mm:ss'),
-        macAddress: this.$route.query.id
+        assetId: this.$route.query.assetId
       }
       this.oldStart = start
       api.queryMonitor(params).then(rs => {
@@ -258,7 +258,7 @@ export default {
     'obj.dataType': {
       handler: function (val) {
         if (val === 2) {
-          window.setTimeout(_ => {
+          window.setTimeout(() => {
             this.chart = echarts.init(this.$refs.historyEc)
             this.queryObj.type = this.obj.type
             this.getData()

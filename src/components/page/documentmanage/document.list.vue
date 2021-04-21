@@ -174,9 +174,9 @@ export default {
             this.query()
           }
         } catch (err) {
-          console.log(err)
+          // empty
         }
-      }).then(() => {})
+      })
     },
     init () {
       if (Number(this.currentUser.orgId) === 0) {

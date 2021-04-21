@@ -11,8 +11,8 @@ module.exports = {
     //     }
     //   }
     // }
-    //proxy: 'http://smart-hcp.com'
-    proxy: 'http://fhhy-jn-0001.51vip.biz:25874'
+    proxy: 'http://smart-hcp.com'
+    //proxy: 'http://fhhy-jn-0001.51vip.biz:25874'
 
   },
   runtimeCompiler: true

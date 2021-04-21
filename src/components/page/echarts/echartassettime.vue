@@ -98,7 +98,7 @@ export default {
       let params = {
         beginDate: moment(this.dateValue[0]).format('YYYY-MM-DD') + ' 00:00:00',
         endDate: moment(this.dateValue[1]).format('YYYY-MM-DD') + ' 23:59:59',
-        macAddr: this.$route.query.id
+        assetId: this.$route.query.assetId
       }
       api.findBootInterval(params).then(rs => {
         if (rs.code === 200 && rs.data.length > 0) {
@@ -109,7 +109,7 @@ export default {
           this.visibile = false
           this.loading = false
         }
-      }, rj => {
+      }, () => {
         this.loading = false
       })
     },

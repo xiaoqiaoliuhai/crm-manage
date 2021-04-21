@@ -110,7 +110,6 @@ export default {
   methods: {
     getInfo () {
       api.LearningCenterfindById({ id: this.id }).then(rs => {
-        console.log(rs)
         this.queryObj.dept = rs.data.dept
         this.queryObj.fileName = rs.data.fileName
         this.queryObj.no = rs.data.no

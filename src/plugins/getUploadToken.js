@@ -1,8 +1,8 @@
 /*
  * @Author: renpengfei
  * @Date: 2019-03-27 18:46:48
- * @Last Modified by: renpengfei
- * @Last Modified time: 2019-04-18 17:17:22
+ * @Last Modified by: qiaodengtao
+ * @Last Modified time: 2021-01-30 15:39:56
  */
 import api from '@/api/api'
 const token = {
@@ -28,6 +28,7 @@ const token = {
         let data = await api.getUpToken()
         this.uploadToken = data.data
       } catch (err) {
+        // empty
       }
     }
   }

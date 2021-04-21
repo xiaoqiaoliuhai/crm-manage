@@ -130,7 +130,7 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(_ => {
+    this.$nextTick(() => {
       this.init()
     })
   },
@@ -155,7 +155,7 @@ export default {
           this.y = []
           this.y2 = []
           this.y2 = []
-          window.setTimeout(_ => {
+          window.setTimeout(() => {
             this.init()
             this.handleData()
           }, 300)

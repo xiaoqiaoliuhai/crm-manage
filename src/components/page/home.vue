@@ -253,7 +253,7 @@ export default {
     }
   },
   created () {
-    this.$nextTick(_ => {
+    this.$nextTick(() => {
       this.failureInit() // 设备状态
       this.initOverviewInfo() // 概览数据
       this.assetPlaceInit() // 科室设备数量

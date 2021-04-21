@@ -247,7 +247,7 @@ export default {
       if (val !== '') {
         window.clearTimeout(this.time)
         this.loading = true
-        this.time = window.setTimeout(_ => {
+        this.time = window.setTimeout(() => {
           let params = {
             pageNum: 1,
             pageSize: 20,
@@ -270,9 +270,7 @@ export default {
       try {
         FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '设备.xlsx')
       } catch (e) {
-        if (typeof console !== 'undefined') {
-          console.log(e, wbout)
-        }
+        // empty
       }
       return wbout
     },
@@ -283,7 +281,6 @@ export default {
         beginDate: moment(this.queryObj.time[0]).format('YYYY-MM-DD') + ' 00:00:00',
         endDate: moment(this.queryObj.time[1]).format('YYYY-MM-DD') + ' 23:59:59'
       }
-      console.log(this.obj1.assetTypes)
       if (this.obj1.assetTypes.length > 0) {
         params['assetTypes'] = this.obj1.assetTypes
       }

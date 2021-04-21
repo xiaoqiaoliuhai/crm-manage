@@ -420,7 +420,9 @@ export default {
       var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
       try {
         FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '保修合同.xlsx')
-      } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+      } catch (e) {
+        // empty
+      }
       return wbout
     },
     list () {
@@ -441,7 +443,7 @@ export default {
           this.emptyData = true
           this.totalCount = 0
         }
-      }).catch(rj => {
+      }).catch(() => {
         this.loading = false
       })
     },
@@ -509,27 +511,25 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      })
-        .then(async () => {
-          try {
-            let data = await api.delContract({ id: row.id })
-            if (data && data.code === 200) {
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              })
-              this.query()
-            }
-          } catch (err) {
-            console.log(err)
+      }).then(async () => {
+        try {
+          let data = await api.delContract({ id: row.id })
+          if (data && data.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.query()
           }
-        })
-        .then(() => {})
-    }
+        } catch (err) {
+          // empty
+        }
+      })
+  }
   },
   watch: {
     'popShow': {
-      handler: function (val, oldval) {
+      handler: function (val) {
         if (!val) {
           this.arr.forEach(item => {
             item.value = ''
@@ -546,7 +546,7 @@ export default {
         this.options = rs.data
       }
     })
-    this.$nextTick(_ => {
+    this.$nextTick(() => {
       let height = document.documentElement.clientHeight
       document.querySelector('.table-contant').style.height = height - 350 + 'px'
     })

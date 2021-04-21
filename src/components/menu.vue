@@ -47,7 +47,7 @@ export default {
   },
   watch: {
     status: {
-      handler: function (val, oldval) {
+      handler: function (val) {
         if (val.isGetMenu) {
           this.getMenuTree()
         }
@@ -132,7 +132,9 @@ export default {
         }
         rolesRs.data.menuArr = this.menuArr
         this.$emit('getinfo', rolesRs.data)
-      } catch (err) {}
+      } catch (err) {
+        // empty
+      }
     }
   }
 }

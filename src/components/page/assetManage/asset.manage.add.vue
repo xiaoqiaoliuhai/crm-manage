@@ -379,7 +379,7 @@ export default {
       if (val !== '') {
         window.clearTimeout(this.time)
         this.loading = true
-        this.time = window.setTimeout(_ => {
+        this.time = window.setTimeout(() => {
           let params = {
             pageNum: 1,
             pageSize: 20,
@@ -424,7 +424,9 @@ export default {
       try {
         let data = await api.unPageiotDeviceList()
         this.iotDeviceIdsOptions = data.data
-      } catch (err) {}
+      } catch (err) {
+        // empty
+      }
     },
     handleClose () {
       this.$router.push({
@@ -449,7 +451,7 @@ export default {
     },
 
     // 删除数组里面删除的图片地址
-    handleReceiptRemove (file, fileList) {
+    handleReceiptRemove (file) {
       this.imgObj.receiptImg = this.sliceArr(
         this.imgObj.receiptImg,
         file,

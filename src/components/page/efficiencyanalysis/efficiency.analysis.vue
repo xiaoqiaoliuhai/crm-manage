@@ -380,7 +380,7 @@ export default {
       if (val !== '') {
         window.clearTimeout(this.time)
         this.loading = true
-        this.time = window.setTimeout(_ => {
+        this.time = window.setTimeout(() => {
           let params = {
             pageNum: 1,
             pageSize: 20,
